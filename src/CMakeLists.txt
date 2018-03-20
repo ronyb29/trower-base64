@@ -12,17 +12,20 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-add_library(trower-base64 SHARED b64.c b64-decode.c)
+add_library(trower-base64           SHARED b64.c b64-decode.c)
+set_target_properties(trower-base64 PROPERTIES
+        OUTPUT_NAME trower-base64
+        SOVERSION "1.0.0")
+
+add_library(trower-base64.static    STATIC b64.c b64-decode.c)
+set_target_properties(trower-base64.static PROPERTIES
+        OUTPUT_NAME trower-base64)
 
 install (FILES
          ${CMAKE_CURRENT_SOURCE_DIR}/base64.h
          DESTINATION include/trower-base64)
 
-set_target_properties(trower-base64 PROPERTIES
-        OUTPUT_NAME trower-base64
-        SOVERSION "1.0.0")
-
-install(TARGETS trower-base64
+install(TARGETS trower-base64 trower-base64.static
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib
